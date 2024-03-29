@@ -6,3 +6,7 @@ plugins {
 repositories {
     mavenCentral()
 }
+
+subprojects {
+    apply(plugin = "com.google.gms.google-services")
+}
