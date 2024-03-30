@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.apollographql.apollo'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'realm-android'
 apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 apply plugin: 'com.google.dagger.hilt.android'
 

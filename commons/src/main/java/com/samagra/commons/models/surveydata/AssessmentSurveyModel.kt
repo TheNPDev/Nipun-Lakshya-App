@@ -16,6 +16,6 @@ open class AssessmentSurveyModel(
     var schoolUdise: Long,
     @SerializedName("actor")
     var actor: String?,
-)  {
-    constructor() : this(0L,null, 0, null, null, 0, null)
-}
+
+)
+

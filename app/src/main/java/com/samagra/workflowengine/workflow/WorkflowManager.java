@@ -16,7 +16,6 @@ import com.samagra.workflowengine.bolo.ReadAlongWorkflow;
 import com.samagra.workflowengine.odk.OdkProperties;
 import com.samagra.workflowengine.odk.OdkWorkflow;
 import com.samagra.workflowengine.workflow.model.Action;
-//import com.samagra.commons.models.chaptersdata.ChapterMapping;
 import com.samagra.workflowengine.workflow.model.FlowConfig;
 import com.samagra.workflowengine.workflow.model.State;
 import com.samagra.workflowengine.workflow.model.WorkflowConfig;
@@ -30,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import timber.log.Timber;
-//import io.realm.RealmList;
 
 public class WorkflowManager {
     private static WorkflowManager instance;
@@ -111,15 +109,6 @@ public class WorkflowManager {
                         readAlongProperties.setRequiredWords(state.getStateData().successCriteria);
                         String competencyID = (String) runtimeProperties.get(WorkflowProperty.COMPETENCY_ID);
                         readAlongProperties.setCompetencyId(competencyID);
-//                        ArrayList<ChapterMapping> chapterMappingList = (ArrayList<ChapterMapping>) runtimeProperties.get(WorkflowProperty.CHAPTER_MAPPING_LIST);
-//                        RealmList<String> refIdList = WorkflowUtils.getRefIdList(subject, (Integer) runtimeProperties.get("grade"),
-//                                chapterMappingList, competencyID, type, prefs);
-//                        Timber.d("Bolo competency id, reference Ids : " + competencyID + "  new id  " + refIdList);
-//                        if (refIdList==null){
-//                            onComplete();
-//                            break;
-//                        }
-//                        readAlongProperties.setBookIdList(new ArrayList<>(refIdList));
                         readAlongProperties.setStateGrade(state.getGradeNumber());
                         readAlongProperties.setStartTime(readAlongWorkflow.startTime);
                         if (state.getDecision().getMeta() != null) {
@@ -162,15 +151,6 @@ public class WorkflowManager {
                         odkProperties.setCompetencyName((String) runtimeProperties.get(WorkflowProperty.SELECTED_COMPETENCY));
                         String odkCompetencyID = (String) runtimeProperties.get(WorkflowProperty.COMPETENCY_ID);
                         odkProperties.setCompetencyId(odkCompetencyID);
-//                        ArrayList<ChapterMapping> chapterMappingList1 = (ArrayList<ChapterMapping>) runtimeProperties.get(WorkflowProperty.CHAPTER_MAPPING_LIST);
-//                        RealmList<String> odkRefIdList = WorkflowUtils.getRefIdList(subject, (Integer) runtimeProperties.get("grade"),
-//                                chapterMappingList1, odkCompetencyID, type, prefs);
-//                        Timber.e("ODK flow to be opened with RefId and selected competency ID : " + odkRefIdList + " " + odkCompetencyID);
-//                        if (odkRefIdList == null) {
-//                            onComplete();
-//                            break;
-//                        }
-//                        odkProperties.setFormID(UtilityFunctions.selectRandomId(odkRefIdList));
                         odkWorkflow1.setProps(odkProperties);
                         if (context != null) {
                             odkWorkflow1.onStart(context);

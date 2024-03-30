@@ -38,38 +38,27 @@ class DataSyncWorker(
         val prefs = CommonsPrefsHelperImpl(context, "prefs")
         if (prefs.isLoggedIn.not())
             return Result.success()
-//        val surveys = RealmStoreHelper.getSurveys()
         val helper = SyncingHelper()
-        val assessments = helper.getAssessmentSubmissions(prefs)
         val submissions = DbHelper.db.getAssessmentSubmissionDao().getSubmissions()
-        Timber.d("doWork: pending assessment: $assessments")
         showTestNotification(
             isCompleted = false,
-            message = "Syncing started - Assessments : ${assessments.size}, Student Submissions :${submissions.size}"
+            message = "Syncing started -, Student Submissions :${submissions.size}"
         )
         showStatusNotification(
             isCompleted = false,
             message = "Assessments Submission Syncing",
             isSuccess = false
         )
-        val isSuccessAssessments = helper.syncAssessments(prefs, assessments)
-        this.showTestNotification(
-            isCompleted = false,
-            message = "Syncing in Progress - Assessments : ${assessments.size} status - $isSuccessAssessments"
-        )
         val isSuccessSubmissions = helper.syncSubmissions(prefs, submissions)
         this.showTestNotification(
             isCompleted = false,
             message = "Syncing in Progress - " +
-                    "\nAssessments : ${assessments.size} status - $isSuccessAssessments " +
                     "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions"
         )
-//        Timber.d("doWork: pending surveys: $surveys")
-//        val isSurveySuccess = helper.syncSurveys(prefs, surveys)
         this.showTestNotification(
             true,
-            "Syncing stopped - " +
-                    "\nAssessments : ${assessments.size} status - $isSuccessAssessments " +
+            "Syncing stopped - "  +
+
                     "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions"
         )
         val schoolSubmissions = DbHelper.db.getSchoolSubmissionDao().getSubmissions()
@@ -77,28 +66,9 @@ class DataSyncWorker(
         this.showTestNotification(
             true,
             "Syncing stopped - " +
-                    "\nAssessments : ${assessments.size} status - $isSuccessAssessments " +
                     "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions" +
                     "\nSchool Submissions : ${schoolSubmissions.size} status - $isSchoolSubmissionSuccess"
         )
-        sendTelemetry(
-            assessmentsCount = assessments.size,
-//            surveysCount = surveys.size,
-            isAssessmentSyncSuccess = isSuccessAssessments,
-//            isSurveySyncSuccess = isSurveySuccess,
-            prefs = prefs
-        )
-//       val isSuccess = isSurveySuccess && isSuccessAssessments
-//        showStatusNotification(
-//            isCompleted = true,
-//            message = if (isSuccess) "Assessments synced successfully" else "Failed to sync the assessments. ${
-//                context.getString(
-//                    R.string.app_name
-//                )
-//            } app will retry syncing after sometime",
-//            isSuccess = isSuccess
-//        )
-//        Timber.d("doWork: Assessment Success: $isSuccessAssessments & Survey success: $isSurveySuccess")
         prefs.markDataSynced()
         return Result.success()
     }
@@ -200,32 +170,4 @@ class DataSyncWorker(
             mBuilder.build()
         )
     }
-
-    private fun sendTelemetry(
-        assessmentsCount: Int,
-        isAssessmentSyncSuccess: Boolean,
-        prefs: CommonsPrefsHelperImpl
-    ) {
-        val list = ArrayList<Cdata>()
-        list.add(Cdata("assessmentsCount", "" + assessmentsCount))
-//        list.add(Cdata("surveysCount", "" + surveysCount))
-        list.add(Cdata("isAssessmentSyncSuccess", "" + isAssessmentSyncSuccess))
-//        list.add(Cdata("isSurveySyncSuccess", "" + isSurveySyncSuccess))
-        val mentorDetailsFromPrefs = prefs.mentorDetailsData
-        mentorDetailsFromPrefs?.let {
-            list.add(Cdata("userId", "" + it.id))
-        }
-        val properties = createProperties(
-            SYNC_WORKER,
-            EVENT_TYPE_SYSTEM,
-            EID_IMPRESSION,
-            createContext(APP_ID, NL_APP_SYNC_WORKER, list),
-            null,
-            null,
-            PreferenceManager.getDefaultSharedPreferences(context)
-        )
-        capture(context, EVENT_WORKER_PROCESSING, properties)
-    }
-
-
 }

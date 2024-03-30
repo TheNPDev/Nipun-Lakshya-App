@@ -17,7 +17,6 @@ import com.samagra.parent.AppConstants.INTENT_SCHOOL_DATA
 import com.samagra.parent.R
 import com.samagra.parent.ViewModelProviderFactory
 import com.samagra.parent.databinding.ActivityAssessmentSurveyBinding
-//import com.samagra.parent.helper.RealmStoreHelper
 import com.samagra.parent.ui.DataSyncRepository
 import com.samagra.parent.ui.competencyselection.CompetencySelectionRepository
 import com.samagra.parent.ui.competencyselection.CompetencySelectionVM
@@ -122,7 +121,6 @@ class AssessmentSurveyActivity : AppCompatActivity() {
             AppConstants.USER_EXAMINER
         )
         CoroutineScope(Dispatchers.IO).launch {
-//            RealmStoreHelper.insertSurveyResults(assessmentSurveyModel)
             withContext(Dispatchers.Main) {
                 progressDialog.dismiss()
                 backToCallingActivity()

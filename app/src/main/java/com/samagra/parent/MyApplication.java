@@ -79,7 +79,6 @@ import dagger.hilt.android.HiltAndroidApp;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-//import io.realm.Realm;
 import io.samagra.odk.collect.extension.listeners.ODKProcessListener;
 import io.samagra.odk.collect.extension.utilities.ODKProvider;
 import okhttp3.Interceptor;
@@ -173,7 +172,6 @@ public class MyApplication extends Collect implements MainApplication, Lifecycle
                 return null;
             }
         });
-//        Realm.init(this);
         downloadURLsRemoteConfig();
     }
 

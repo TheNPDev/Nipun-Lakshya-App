@@ -65,9 +65,6 @@ public interface SplashContract {
         void verifyJWTTokenValidity(String apiKey,String jwtToken, Context context,String refreshToken);
         void updateJWT(String apiKey, String refreshToken,Context context);
         void updateJWTApi(String apiKey, JwtResponseListener listner);
-
-//        void initRealm();
-
         void forceLogout(Context ctx, CommonsPrefsHelperImpl prefs, long forceLogoutVersion, TaskCompleteListener listener);
 
         void setCrashCustomEvents(CommonsPrefsHelperImpl prefs);

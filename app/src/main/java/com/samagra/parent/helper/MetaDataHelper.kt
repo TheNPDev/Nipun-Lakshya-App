@@ -20,8 +20,6 @@ import com.morziz.network.network.Network
 import com.samagra.ancillaryscreens.data.model.RetrofitService
 import com.samagra.ancillaryscreens.data.prefs.CommonsPrefsHelperImpl
 import com.samagra.commons.MetaDataExtensions
-import com.samagra.commons.models.FormStructure
-//import com.samagra.commons.models.chaptersdata.ChapterMapping
 import com.samagra.commons.models.metadata.CompetencyModel
 import com.samagra.commons.models.metadata.MetaDataRemoteResponse
 import com.samagra.commons.models.metadata.Subjects
@@ -31,12 +29,9 @@ import com.samagra.commons.utils.NetworkStateManager
 import com.samagra.commons.utils.RemoteConfigUtils
 import com.samagra.parent.ui.DataSyncRepository
 import com.samagra.parent.ui.getBearerAuthToken
-//import io.realm.RealmList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.Date
@@ -86,73 +81,6 @@ object MetaDataHelper {
         return remoteResponseStatus
     }
 
-    private suspend fun parseAndStoreWorkflowReferenceIdData(
-        workflowRefIdListRemote: ArrayList<WorkflowRefIds>?,
-        subjects: ArrayList<Subjects>?,
-        prefs: CommonsPrefsHelperImpl
-    ) {
-        workflowRefIdListRemote?.let { list ->
-            val workflowRefIdsList: MutableList<ReferenceIds> = mutableListOf()
-
-            withContext(Dispatchers.Default){
-                list.forEach { item ->
-                    workflowRefIdsList.add(
-                        ReferenceIds(
-                            competencyId = item.competencyId!!,
-                            grade = item.grade!!,
-                            isActive = item.isActive,
-                            refIds = item.refIds?.toMutableList() ?: mutableListOf(),
-                            subjectId = item.subjectId!!,
-                            type = item.type!!,
-                            assessmentTypeId = item.assessmentTypeId
-                        )
-                    )
-                }
-            }
-
-            withContext(Dispatchers.IO){
-                metadataDao.insertReferenceIds(workflowRefIdsList)
-            }
-        }
-
-        val odkFormsSet = mutableSetOf<String>()
-//        val chapterMappingListRealm = ArrayList<ChapterMapping>()
-
-        withContext(Dispatchers.Default){
-            workflowRefIdListRemote?.forEach { workFlowRefId ->
-//                val chapterMappingData = ChapterMapping()
-//                chapterMappingData.grade = workFlowRefId.grade ?: 0
-//                chapterMappingData.subjectId = workFlowRefId.subjectId ?: 0
-//                chapterMappingData.competencyId = workFlowRefId.competencyId.toString()
-//                chapterMappingData.type = workFlowRefId.type
-//                val realmList = RealmList<String>()
-//                val refIdsList = workFlowRefId.refIds
-//                refIdsList?.forEach { refId ->
-//                    realmList.add(refId)
-//                }
-//                chapterMappingData.refIds = realmList
-//                chapterMappingData.assessmentTypeId = workFlowRefId.assessmentTypeId ?: 0
-//                chapterMappingData.isActive = workFlowRefId.isActive ?: true
-//                chapterMappingListRealm.add(chapterMappingData)
-//                if (chapterMappingData.type.equals(CommonConstants.ODK)) {
-//                    workFlowRefId.refIds?.forEach { refId ->
-//                        odkFormsSet.add(refId)
-//                    }
-//                }
-            }
-        }
-
-        withContext(Dispatchers.IO){
-//            RealmStoreHelper.deleteChapterMapping()
-//            RealmStoreHelper.insertChapterMapping(chapterMappingListRealm)
-            prefs.updateFormConfiguredListText(gson.toJson(odkFormsSet))
-            DataSyncRepository().checkODKFormsUpdates(
-                subject = "-",
-                networkConnected = true,
-                prefs = prefs
-            )
-        }
-    }
 
     suspend fun parseAndStoreCompetencyData(
         competencyList: ArrayList<CompetencyModel>?,
@@ -269,11 +197,6 @@ object MetaDataHelper {
             )
             parseAndStoreCompetencyData(
                 competencyList = it.competencyMapping,
-                prefs = prefs
-            )
-            parseAndStoreWorkflowReferenceIdData(
-                workflowRefIdListRemote = it.workflowRefIds,
-                subjects = it.subjects,
                 prefs = prefs
             )
             prefs.previousMetadataFetch = System.currentTimeMillis()

@@ -58,7 +58,6 @@ class OdkInstructionActivity : NonViewModelBaseActivity<ActivityOdkInstructionBi
         initPrefs()
         getDataFromIntent()
         setupUI()
-        getFormIdList()
         startTime = Date()
         setupToolbar()
         setListeners()
@@ -67,26 +66,8 @@ class OdkInstructionActivity : NonViewModelBaseActivity<ActivityOdkInstructionBi
         launchFormsOdkFlow()
     }
 
-    private fun getFormIdList() {
-        val odkFormId = UtilityFunctions.getOdkFormId()
-        formIdsList.addAll(odkFormId)
-        val spinner: SpinnerFieldWidget = setSpinnerLists(formIdsList)
-        setSpinnerListener(spinner)
-    }
 
-    private fun setSpinnerListener(spinner: SpinnerFieldWidget) {
-        spinner.setSelectionCallback { item, _ ->
-            formId = item
-            Timber.e( "ODK Instruction screen formId from spinner : $formId")
-        }
-    }
 
-    private fun setSpinnerLists(list: ArrayList<String>): SpinnerFieldWidget {
-        val spinner = SpinnerFieldWidget(this)
-        binding.llSpn.addView(spinner)
-        spinner.setListData(list.distinct().toTypedArray(), getString(R.string.students), false, 0)
-        return spinner
-    }
 
     private fun setPostHogEventSelectOdkCompetency() {
         val cDataList = ArrayList<Cdata>()

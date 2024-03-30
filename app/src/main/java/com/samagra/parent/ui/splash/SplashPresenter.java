@@ -26,15 +26,12 @@ import com.samagra.parent.AppConstants;
 import com.samagra.parent.BuildConfig;
 import com.samagra.parent.base.BasePresenter;
 import com.samagra.parent.helper.BackendNwHelper;
-//import com.samagra.parent.helper.RealmStoreHelper;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import io.samagra.odk.collect.extension.listeners.ODKProcessListener;
-import io.samagra.odk.collect.extension.utilities.ODKProvider;
 import timber.log.Timber;
 
 /**
@@ -210,14 +207,6 @@ public class SplashPresenter<V extends SplashContract.View, I extends SplashCont
         }
     }
 
-//    @Override
-//    public void initRealm() {
-//        try {
-//            RealmStoreHelper.INSTANCE.getDefaultInstance();
-//        } catch (Exception e) {
-//            Timber.e(e);
-//        }
-//    }
 
     @Override
     public void forceLogout(Context ctx, CommonsPrefsHelperImpl prefs, long forceLogoutVersion, TaskCompleteListener listener) {
@@ -225,7 +214,6 @@ public class SplashPresenter<V extends SplashContract.View, I extends SplashCont
         prefs.clearData();
         AppPreferences.INSTANCE.clearLocal();
         AsyncTask.execute(() -> {
-//            RealmStoreHelper.INSTANCE.clearAllTables();
             if (listener != null) {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     SystemPreferences.INSTANCE.setForceLogoutVersion(forceLogoutVersion);

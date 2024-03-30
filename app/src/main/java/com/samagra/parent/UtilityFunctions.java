@@ -23,14 +23,9 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.samagra.ancillaryscreens.data.prefs.CommonsPrefsHelperImpl;
-import com.samagra.commons.MetaDataExtensions;
-import com.samagra.commons.models.FormStructure;
-//import com.samagra.parent.helper.RealmStoreHelper;
 import com.samagra.parent.ui.HomeScreen.AssessmentRangeConfig;
 import com.samagra.parent.ui.detailselection.ClassModel;
 import com.samagra.parent.ui.detailselection.SubjectModel;
-//import com.samagra.commons.models.chaptersdata.ChapterMapping;
 import com.samagra.workflowengine.workflow.model.FlowConfig;
 import com.samagra.workflowengine.workflow.model.WorkflowConfig;
 
@@ -53,7 +48,6 @@ import java.util.TimeZone;
 import java.util.TreeSet;
 
 import io.reactivex.annotations.NonNull;
-//import io.realm.RealmList;
 import timber.log.Timber;
 
 /**
@@ -226,31 +220,6 @@ public class UtilityFunctions {
         }
         return configMapper;
     }
-
-    public static HashSet<String> getOdkFormId() {
-        HashSet<String> odkFormsSet = new HashSet<>();
-//        try {
-//            ArrayList<ChapterMapping> chapterMappingList = RealmStoreHelper.getChapterMapping();
-//            if (chapterMappingList != null) {
-//                for (ChapterMapping chapterMappingData : chapterMappingList) {
-//                    if (chapterMappingData.getType().equals(ODK)) {
-//                        List<String> refIds = chapterMappingData.getRefIds();
-//                        if (refIds != null && !refIds.isEmpty()) {
-//                            for (String refId : refIds) {
-//                                odkFormsSet.add(refId);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
-        return odkFormsSet;
-    }
-
 
     public static List<ClassModel> getClassData(Map<Integer, Set<String>> configMapper) {
         Set<Integer> classes = configMapper.keySet();

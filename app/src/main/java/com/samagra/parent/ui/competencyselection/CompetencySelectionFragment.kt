@@ -36,7 +36,6 @@ import com.samagra.commons.utils.CommonConstants
 import com.samagra.commons.utils.RemoteConfigUtils
 import com.samagra.parent.*
 import com.samagra.parent.databinding.FragmentCompetencySelectionBinding
-//import com.samagra.parent.helper.RealmStoreHelper
 import com.samagra.parent.ui.DataSyncRepository
 import com.samagra.parent.ui.SpinnerFieldWidget
 import com.samagra.parent.ui.competencyselection.readonlycompetency.INDIVIDUAL_RESULT_REQUEST_CODE
@@ -197,7 +196,6 @@ class CompetencySelectionFragment :
         val flattenAllResultsList = flattenAllResultsOfMap(resultMap)
         if (prefs.selectedUser != AppConstants.USER_PARENT) {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-//                insertResultsOnDb(flattenAllResultsList)
                 redirectToFinalResultsScreen()
             }
         } else {
@@ -205,26 +203,6 @@ class CompetencySelectionFragment :
         }
     }
 
-//    private suspend fun insertResultsOnDb(flattenAllResultsList: ArrayList<ResultsVisitData>) {
-//        prefs.removeKey(CommonConstants.ASSESSMENT_RESULTS_TEMP)
-//        coroutineScope {
-//            if (flattenAllResultsList.isNotEmpty()) {
-//                val async: Deferred<Boolean> = async(Dispatchers.IO) {
-//                    flattenAllResultsList[0].udise_code?.let {
-//                        RealmStoreHelper.updateSchoolsVisitStatus(
-//                            it.toLong()
-//                        )
-//                    }
-//                    RealmStoreHelper.insertFinalResultsList(flattenAllResultsList)
-//                }
-//                async.await()
-//            } else {
-//                Timber.e(
-//                    "Flatten results list is empty so not able to insert data in DB" + " and mark school status as visit!"
-//                )
-//            }
-//        }
-//    }
 
     private fun createStudentUUID() {
         if (nextStudent) {
@@ -266,25 +244,6 @@ class CompetencySelectionFragment :
                 moduleResultList.add(moduleResultItem)
                 val finalResultJsonString = gson.toJson(moduleResultList)
                 Timber.d("student results " + finalResultJsonString)
-                val studentResults = moduleResultItem.studentResults
-
-//                val resultsVisitData = ResultsVisitData(
-//                    submissionTimeStamp,
-//                    prefs.mentorDetailsData?.id,
-//                    flowUUID,
-//                    studentResults.grade,
-//                    studentResults.subject,
-//                    true,
-//                    finalResultJsonString,
-//                    moduleResultList.size,
-//                    studentResults.schoolsData.udise.toString(),
-//                    UtilityFunctions.getTimeString(sessionTimeOfStudent),
-//                    prefs.selectedUser,
-//                    getBlock(studentResults.schoolsData.block),
-//                    studentSessionID,
-//                    prefs.assessmentType
-//                )
-//                flattenResultsList.add(resultsVisitData)
             }
         }
         return flattenResultsList
@@ -392,10 +351,6 @@ class CompetencySelectionFragment :
             resultMapString,
             type
         )
-        val flattenAllResultsList = flattenAllResultsOfMap(map)
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-//            insertResultsOnDb(flattenAllResultsList)
-        }
     }
 
     private fun setObservers() {
@@ -482,10 +437,6 @@ class CompetencySelectionFragment :
                 WorkflowProperty.SCHOOL_DATA,
                 schoolsData
             )
-//            workflowManager.addProperty(
-//                WorkflowProperty.CHAPTER_MAPPING_LIST,
-//                RealmStoreHelper.getChapterMapping()
-//            )
             workflowManager.startWorkflow(
                 activity,
                 gradeValue,
