@@ -38,14 +38,14 @@ class DataSyncWorker(
         val prefs = CommonsPrefsHelperImpl(context, "prefs")
         if (prefs.isLoggedIn.not())
             return Result.success()
-        val surveys = RealmStoreHelper.getSurveys()
+//        val surveys = RealmStoreHelper.getSurveys()
         val helper = SyncingHelper()
         val assessments = helper.getAssessmentSubmissions(prefs)
         val submissions = DbHelper.db.getAssessmentSubmissionDao().getSubmissions()
         Timber.d("doWork: pending assessment: $assessments")
         showTestNotification(
             isCompleted = false,
-            message = "Syncing started - Assessments : ${assessments.size}, Surveys : ${surveys.size}, Student Submissions :${submissions.size}"
+            message = "Syncing started - Assessments : ${assessments.size}, Student Submissions :${submissions.size}"
         )
         showStatusNotification(
             isCompleted = false,
@@ -64,14 +64,13 @@ class DataSyncWorker(
                     "\nAssessments : ${assessments.size} status - $isSuccessAssessments " +
                     "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions"
         )
-        Timber.d("doWork: pending surveys: $surveys")
-        val isSurveySuccess = helper.syncSurveys(prefs, surveys)
+//        Timber.d("doWork: pending surveys: $surveys")
+//        val isSurveySuccess = helper.syncSurveys(prefs, surveys)
         this.showTestNotification(
             true,
             "Syncing stopped - " +
                     "\nAssessments : ${assessments.size} status - $isSuccessAssessments " +
-                    "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions" +
-                    "\nSurveys : ${surveys.size} status - $isSurveySuccess"
+                    "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions"
         )
         val schoolSubmissions = DbHelper.db.getSchoolSubmissionDao().getSubmissions()
         val isSchoolSubmissionSuccess = helper.syncSchoolSubmission(prefs, schoolSubmissions)
@@ -80,27 +79,26 @@ class DataSyncWorker(
             "Syncing stopped - " +
                     "\nAssessments : ${assessments.size} status - $isSuccessAssessments " +
                     "\nStudent Submissions : ${submissions.size} status - $isSuccessSubmissions" +
-                    "\nSurveys : ${surveys.size} status - $isSurveySuccess" +
                     "\nSchool Submissions : ${schoolSubmissions.size} status - $isSchoolSubmissionSuccess"
         )
         sendTelemetry(
             assessmentsCount = assessments.size,
-            surveysCount = surveys.size,
+//            surveysCount = surveys.size,
             isAssessmentSyncSuccess = isSuccessAssessments,
-            isSurveySyncSuccess = isSurveySuccess,
+//            isSurveySyncSuccess = isSurveySuccess,
             prefs = prefs
         )
-        val isSuccess = isSurveySuccess && isSuccessAssessments
-        showStatusNotification(
-            isCompleted = true,
-            message = if (isSuccess) "Assessments synced successfully" else "Failed to sync the assessments. ${
-                context.getString(
-                    R.string.app_name
-                )
-            } app will retry syncing after sometime",
-            isSuccess = isSuccess
-        )
-        Timber.d("doWork: Assessment Success: $isSuccessAssessments & Survey success: $isSurveySuccess")
+//       val isSuccess = isSurveySuccess && isSuccessAssessments
+//        showStatusNotification(
+//            isCompleted = true,
+//            message = if (isSuccess) "Assessments synced successfully" else "Failed to sync the assessments. ${
+//                context.getString(
+//                    R.string.app_name
+//                )
+//            } app will retry syncing after sometime",
+//            isSuccess = isSuccess
+//        )
+//        Timber.d("doWork: Assessment Success: $isSuccessAssessments & Survey success: $isSurveySuccess")
         prefs.markDataSynced()
         return Result.success()
     }
@@ -205,16 +203,14 @@ class DataSyncWorker(
 
     private fun sendTelemetry(
         assessmentsCount: Int,
-        surveysCount: Int,
         isAssessmentSyncSuccess: Boolean,
-        isSurveySyncSuccess: Boolean,
         prefs: CommonsPrefsHelperImpl
     ) {
         val list = ArrayList<Cdata>()
         list.add(Cdata("assessmentsCount", "" + assessmentsCount))
-        list.add(Cdata("surveysCount", "" + surveysCount))
+//        list.add(Cdata("surveysCount", "" + surveysCount))
         list.add(Cdata("isAssessmentSyncSuccess", "" + isAssessmentSyncSuccess))
-        list.add(Cdata("isSurveySyncSuccess", "" + isSurveySyncSuccess))
+//        list.add(Cdata("isSurveySyncSuccess", "" + isSurveySyncSuccess))
         val mentorDetailsFromPrefs = prefs.mentorDetailsData
         mentorDetailsFromPrefs?.let {
             list.add(Cdata("userId", "" + it.id))

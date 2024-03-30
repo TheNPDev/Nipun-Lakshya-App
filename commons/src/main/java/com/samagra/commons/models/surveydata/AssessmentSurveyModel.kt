@@ -1,7 +1,6 @@
 package com.samagra.commons.models.surveydata
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
 
 open class AssessmentSurveyModel(
     var submissionTimeStamp: Long?,
@@ -17,6 +16,6 @@ open class AssessmentSurveyModel(
     var schoolUdise: Long,
     @SerializedName("actor")
     var actor: String?,
-) : RealmObject() {
+)  {
     constructor() : this(0L,null, 0, null, null, 0, null)
 }

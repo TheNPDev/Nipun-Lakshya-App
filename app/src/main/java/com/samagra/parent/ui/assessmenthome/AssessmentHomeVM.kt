@@ -38,7 +38,7 @@ import com.samagra.parent.UtilityFunctions
 import com.samagra.parent.helper.AppActionsHelper
 import com.samagra.parent.helper.MentorDataHelper
 import com.samagra.parent.helper.MetaDataHelper
-import com.samagra.parent.helper.RealmStoreHelper
+//import com.samagra.parent.helper.RealmStoreHelper
 import com.samagra.parent.helper.SyncRepository
 import com.samagra.parent.helper.SyncingHelper
 import com.samagra.parent.repository.ExaminerPerformanceInsightsRepository
@@ -300,9 +300,7 @@ class AssessmentHomeVM @Inject constructor(
     fun onLogoutClicked() {
         CoroutineScope(Dispatchers.IO).launch {
 
-            if (RealmStoreHelper.getFinalResults()
-                    .isNotEmpty() || RealmStoreHelper.getSurveyResults()
-                    .isNotEmpty() || DbHelper.isSyncingRequired()
+            if ( DbHelper.isSyncingRequired()
             ) {
                 showSyncBeforeLogout.postValue(Unit)
             } else {
@@ -323,16 +321,16 @@ class AssessmentHomeVM @Inject constructor(
         }
     }
 
-    private suspend fun clearRealmTables() {
-        val isSuccess = withContext(Dispatchers.IO) {
-            RealmStoreHelper.clearAllTables()
-        }
-        Timber.d("clearRealmTables: ")
-    }
+//    private suspend fun clearRealmTables() {
+//        val isSuccess = withContext(Dispatchers.IO) {
+//            RealmStoreHelper.clearAllTables()
+//        }
+//        Timber.d("clearRealmTables: ")
+//    }
 
     private suspend fun clearAllUserData(prefs: CommonsPrefsHelperImpl) {
         prefs.clearData()
-        clearRealmTables()
+//        clearRealmTables()
         nlDatabase?.clearAllTables()
         PostHog.with(getApplication()).reset()
     }
@@ -355,7 +353,7 @@ class AssessmentHomeVM @Inject constructor(
                 val helper = SyncingHelper()
                 var isSuccess = helper.syncAssessments(prefs)
                 isSuccess = helper.syncSubmissions(prefs) && isSuccess
-                isSuccess = helper.syncSurveys(prefs) && isSuccess
+//                isSuccess = helper.syncSurveys(prefs) && isSuccess
                 isSuccess = helper.syncSchoolSubmission(prefs) && isSuccess
                 Timber.i("IsSuccess : $isSuccess")
                 withContext(Dispatchers.Main) {
@@ -551,13 +549,13 @@ class AssessmentHomeVM @Inject constructor(
         val overviewDataFromPrefs =
             MentorDataHelper.getOverviewDataFromPrefs(prefs.mentorOverviewDetails)
         overviewDataFromPrefs?.let { overview ->
-            val finalResultsRealm = RealmStoreHelper.getFinalResults()
-            val homeOverviewData = if (finalResultsRealm.isNotEmpty()) {
-                MentorDataHelper.setOverviewCalculations(finalResultsRealm, overview)
-            } else {
-                overview
-            }
-            mentorOverViewData.postValue(homeOverviewData)
+//            val finalResultsRealm = RealmStoreHelper.getFinalResults()
+//            val homeOverviewData = if (finalResultsRealm.isNotEmpty()) {
+//                MentorDataHelper.setOverviewCalculations(finalResultsRealm, overview)
+//            } else {
+//                overview
+//            }
+//            mentorOverViewData.postValue(homeOverviewData)
         }
     }
 

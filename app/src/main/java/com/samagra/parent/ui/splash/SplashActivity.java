@@ -85,7 +85,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         setContentView(R.layout.activity_splash);
         progressBar = findViewById(R.id.pbLoading);
         getActivityComponent().inject(this);
-        splashPresenter.initRealm();
+//        splashPresenter.initRealm();
         setSplashBanner();
         prefs = new CommonsPrefsHelperImpl(this, "prefs");
         splashPresenter.onAttach(this);

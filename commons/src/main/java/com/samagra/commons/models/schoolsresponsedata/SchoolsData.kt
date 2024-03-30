@@ -1,7 +1,6 @@
 package com.samagra.commons.models.schoolsresponsedata
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
 import java.io.Serializable
 
 open class SchoolsData(
@@ -30,6 +29,6 @@ open class SchoolsData(
     var schoolLong: Double?,
     @SerializedName("geo_fence_enabled")
     var geofencingEnabled: Boolean?,
-    ) : Serializable, RealmObject() {
+    ) : Serializable {
     constructor() : this(null, null, null,null, null, null, null, null,null,null,null,null,null)
 }

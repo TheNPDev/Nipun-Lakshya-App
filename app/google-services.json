@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "18318932516",
+    "project_id": "nipun-lakshya-app",
+    "storage_bucket": "nipun-lakshya-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18318932516:android:b69cbeefd70b7745a076b1",
+        "android_client_info": {
+          "package_name": "org.samagra.missionPrerna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDFeFX5scjUSnQi4Uwzgj9uUgucXC-dtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

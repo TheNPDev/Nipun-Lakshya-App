@@ -31,7 +31,7 @@ import com.samagra.commons.basemvvm.BaseFragment
 import com.samagra.commons.constants.Constants
 import com.samagra.commons.getLastCharAsInt
 import com.samagra.commons.getPercentage
-import com.samagra.commons.models.chaptersdata.ChapterMapping
+//import com.samagra.commons.models.chaptersdata.ChapterMapping
 import com.samagra.commons.models.metadata.CompetencyModel
 import com.samagra.commons.models.schoolsresponsedata.SchoolsData
 import com.samagra.commons.models.submitresultsdata.ResultsVisitData
@@ -47,7 +47,7 @@ import com.samagra.commons.utils.getNipunCriteria
 import com.samagra.commons.utils.playMusic
 import com.samagra.parent.*
 import com.samagra.parent.databinding.FragmentReadOnlyCompetencyBinding
-import com.samagra.parent.helper.RealmStoreHelper
+//import com.samagra.parent.helper.RealmStoreHelper
 import com.samagra.parent.ui.DataSyncRepository
 import com.samagra.parent.ui.competencyselection.*
 import com.samagra.parent.ui.finalresults.FinalResultsNlActivity
@@ -75,8 +75,8 @@ class ReadOnlyCompetencyFragment :
 
     private val gson by lazy { Gson() }
 
-    private lateinit var chapterMappingMap: HashMap<Int, ChapterMapping>
-    private lateinit var filteredChapterMappingList: ArrayList<ChapterMapping>
+//    private lateinit var chapterMappingMap: HashMap<Int, ChapterMapping>
+//    private lateinit var filteredChapterMappingList: ArrayList<ChapterMapping>
     private var stateLedFinalResultsList: ArrayList<StateLedResultModel> = ArrayList()
     private lateinit var studentNipunMap: LinkedHashMap<String, StateLedResultModel>
     private var nextStudent: Boolean = false
@@ -220,9 +220,9 @@ class ReadOnlyCompetencyFragment :
             type
         )
         val flattenAllResultsList = flattenAllResultsOfMap(map)
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            insertResultsOnDb(flattenAllResultsList)
-        }
+//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+//            insertResultsOnDb(flattenAllResultsList)
+//        }
     }
 
     private fun endFlowRedirectToFinalResults() {
@@ -298,7 +298,7 @@ class ReadOnlyCompetencyFragment :
         when (prefs.selectedUser) {
             AppConstants.USER_EXAMINER -> {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    insertResultsOnDb(flattenAllResultsList)
+//                    insertResultsOnDb(flattenAllResultsList)
                     redirectToFinalResultsScreenTeacher(
                         nipunStudentWithCompetencyMap,
                         completeNipunMap
@@ -307,7 +307,7 @@ class ReadOnlyCompetencyFragment :
             }
             AppConstants.USER_TEACHER -> {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    insertResultsOnDb(flattenAllResultsList)
+//                    insertResultsOnDb(flattenAllResultsList)
                     redirectToFinalResultsScreenTeacher(
                         nipunStudentWithCompetencyMap,
                         completeNipunMap
@@ -316,7 +316,7 @@ class ReadOnlyCompetencyFragment :
             }
             AppConstants.USER_MENTOR -> {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    insertResultsOnDb(flattenAllResultsList)
+//                    insertResultsOnDb(flattenAllResultsList)
                     redirectToFinalResultsScreenTeacher(
                         nipunStudentWithCompetencyMap,
                         completeNipunMap
@@ -325,7 +325,7 @@ class ReadOnlyCompetencyFragment :
             }
             Constants.USER_DIET_MENTOR -> {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    insertResultsOnDb(flattenAllResultsList)
+//                    insertResultsOnDb(flattenAllResultsList)
                     if (prefs.saveSelectStateLedAssessment == AppConstants.DIET_MENTOR_STATE_LED_ASSESSMENT) {
                         redirectToFinalResultsScreenTeacher(
                             nipunStudentWithCompetencyMap,
@@ -345,24 +345,24 @@ class ReadOnlyCompetencyFragment :
         }
     }
 
-    private suspend fun insertResultsOnDb(
-        flattenAllResultsList: ArrayList<ResultsVisitData>
-    ) {
-        prefs.removeKey(CommonConstants.ASSESSMENT_RESULTS_TEMP)
-        coroutineScope {
-            if (flattenAllResultsList.isNotEmpty()) {
-                val async = async(Dispatchers.IO) {
-                    flattenAllResultsList[0].udise_code?.let {
-                        RealmStoreHelper.updateSchoolsVisitStatus(
-                            it.toLong()
-                        )
-                    }
-                    RealmStoreHelper.insertFinalResultsList(flattenAllResultsList)
-                }
-                async.await()
-            }
-        }
-    }
+//    private suspend fun insertResultsOnDb(
+//        flattenAllResultsList: ArrayList<ResultsVisitData>
+//    ) {
+//        prefs.removeKey(CommonConstants.ASSESSMENT_RESULTS_TEMP)
+//        coroutineScope {
+//            if (flattenAllResultsList.isNotEmpty()) {
+//                val async = async(Dispatchers.IO) {
+//                    flattenAllResultsList[0].udise_code?.let {
+//                        RealmStoreHelper.updateSchoolsVisitStatus(
+//                            it.toLong()
+//                        )
+//                    }
+//                    RealmStoreHelper.insertFinalResultsList(flattenAllResultsList)
+//                }
+//                async.await()
+//            }
+//        }
+//    }
 
     private fun checkIfStudentNipun(
         viewType: String,
@@ -458,23 +458,23 @@ class ReadOnlyCompetencyFragment :
                 moduleResultList.add(moduleResultItem)
                 val finalResultJsonString = gson.toJson(moduleResultList)
                 val studentResults = moduleResultItem.studentResults
-                val resultsVisitData = ResultsVisitData(
-                    submissionTimeStamp,
-                    prefs.mentorDetailsData?.id,
-                    flowUUID,
-                    studentResults.grade,
-                    studentResults.subject,
-                    true,
-                    finalResultJsonString,
-                    moduleResultList.size,
-                    studentResults.schoolsData.udise.toString(),
-                    UtilityFunctions.getTimeString(sessionTimeOfStudent),
-                    prefs.selectedUser,
-                    getBlock(studentResults.schoolsData.block),
-                    studentSessionID,
-                    prefs.assessmentType
-                )
-                flattenResultsList.add(resultsVisitData)
+//                val resultsVisitData = ResultsVisitData(
+//                    submissionTimeStamp,
+//                    prefs.mentorDetailsData?.id,
+//                    flowUUID,
+//                    studentResults.grade,
+//                    studentResults.subject,
+//                    true,
+//                    finalResultJsonString,
+//                    moduleResultList.size,
+//                    studentResults.schoolsData.udise.toString(),
+//                    UtilityFunctions.getTimeString(sessionTimeOfStudent),
+//                    prefs.selectedUser,
+//                    getBlock(studentResults.schoolsData.block),
+//                    studentSessionID,
+//                    prefs.assessmentType
+//                )
+//                flattenResultsList.add(resultsVisitData)
             }
         }
         return flattenResultsList
@@ -721,52 +721,52 @@ class ReadOnlyCompetencyFragment :
             competenciesDataList = it
 //            setCompetencyAdapter()
         }
-        prepareChapterMappingList()
+//        prepareChapterMappingList()
     }
 
-    private fun prepareChapterMappingList() {
-        filteredChapterMappingList = ArrayList()
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            val chapterMappingList: ArrayList<ChapterMapping> =
-                withContext(Dispatchers.IO) {
-                    getFilteredChapterMapping(filteredChapterMappingList)
-                }
-            filteredChapterMappingList = chapterMappingList
-        }
-    }
+//    private fun prepareChapterMappingList() {
+//        filteredChapterMappingList = ArrayList()
+//        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+//            val chapterMappingList: ArrayList<ChapterMapping> =
+//                withContext(Dispatchers.IO) {
+//                    getFilteredChapterMapping(filteredChapterMappingList)
+//                }
+//            filteredChapterMappingList = chapterMappingList
+//        }
+//    }
 
-    private suspend fun getFilteredChapterMapping(arrayList: ArrayList<ChapterMapping>): ArrayList<ChapterMapping> {
-        chapterMappingMap = HashMap()
-        val chapterMapping = RealmStoreHelper.getChapterMapping()
-        filteredCompetencyList.forEach { competencyModel ->
-            chapterMapping.forEach { refIdsMapping ->
-                if (competencyModel.cId == refIdsMapping.competencyId.toInt()) {
-                    val assessmentType = MetaDataExtensions.getAssessmentTypeFromId(
-                        chapterMappingMap[competencyModel.cId]?.assessmentTypeId ?: 0,
-                        prefs.assessmentTypesListJson
-                    )
-                    if (prefs.assessmentType == Constants.STATE_LED_ASSESSMENT) {
-                        if (!chapterMappingMap.containsKey(competencyModel.cId)
-                            || assessmentType != Constants.STATE_LED_ASSESSMENT
-                        ) {
-                            chapterMappingMap[competencyModel.cId] = refIdsMapping
-                        }
-                    } else {
-                        if (!chapterMappingMap.containsKey(competencyModel.cId)
-                            && assessmentType != Constants.STATE_LED_ASSESSMENT
-                        ) {
-                            chapterMappingMap[competencyModel.cId] = refIdsMapping
-                        }
-                    }
-                }
-            }
-        }
-        Timber.e("mapmap ${gson.toJson(chapterMappingMap)}")
-        chapterMappingMap.values.forEach {
-            arrayList.add(it)
-        }
-        return arrayList
-    }
+//    private suspend fun getFilteredChapterMapping(arrayList: ArrayList<ChapterMapping>): ArrayList<ChapterMapping> {
+//        chapterMappingMap = HashMap()
+//        val chapterMapping = RealmStoreHelper.getChapterMapping()
+//        filteredCompetencyList.forEach { competencyModel ->
+//            chapterMapping.forEach { refIdsMapping ->
+//                if (competencyModel.cId == refIdsMapping.competencyId.toInt()) {
+//                    val assessmentType = MetaDataExtensions.getAssessmentTypeFromId(
+//                        chapterMappingMap[competencyModel.cId]?.assessmentTypeId ?: 0,
+//                        prefs.assessmentTypesListJson
+//                    )
+//                    if (prefs.assessmentType == Constants.STATE_LED_ASSESSMENT) {
+//                        if (!chapterMappingMap.containsKey(competencyModel.cId)
+//                            || assessmentType != Constants.STATE_LED_ASSESSMENT
+//                        ) {
+//                            chapterMappingMap[competencyModel.cId] = refIdsMapping
+//                        }
+//                    } else {
+//                        if (!chapterMappingMap.containsKey(competencyModel.cId)
+//                            && assessmentType != Constants.STATE_LED_ASSESSMENT
+//                        ) {
+//                            chapterMappingMap[competencyModel.cId] = refIdsMapping
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        Timber.e("mapmap ${gson.toJson(chapterMappingMap)}")
+//        chapterMappingMap.values.forEach {
+//            arrayList.add(it)
+//        }
+//        return arrayList
+//    }
 
     private fun setClickListeners() {
         binding.mtlBtnStartAssessment.setOnClickListener {
@@ -846,10 +846,10 @@ class ReadOnlyCompetencyFragment :
         workflowManager.addProperty(WorkflowProperty.COMPETENCY_ID, competencyData.cId.toString())
         workflowManager.addProperty(WorkflowProperty.SCHOOL_DATA, schoolsData)
         workflowManager.addProperty(WorkflowProperty.ASSESSMENT_TYPE, prefs.assessmentType)
-        workflowManager.addProperty(
-            WorkflowProperty.CHAPTER_MAPPING_LIST,
-            filteredChapterMappingList
-        )
+//        workflowManager.addProperty(
+//            WorkflowProperty.CHAPTER_MAPPING_LIST,
+//            filteredChapterMappingList
+//        )
         val subject = MetaDataExtensions.getSubjectFromId(
             competencyData.subjectId,
             prefs.subjectsListJson

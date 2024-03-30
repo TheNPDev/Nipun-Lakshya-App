@@ -1,6 +1,6 @@
 package com.samagra.workflowengine.workflow.model;
 
-import com.samagra.commons.models.chaptersdata.ChapterMapping;
+//import com.samagra.commons.models.chaptersdata.ChapterMapping;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class WorkflowConfig {
     private List<FlowConfig> flowConfigs;
     private List<Action> actions;
     private List<State> states;
-    private List<ChapterMapping> chapterMapping;
+//    private List<ChapterMapping> chapterMapping;
 
     public List<FlowConfig> getFlowConfigs() {
         return flowConfigs;
@@ -35,11 +35,11 @@ public class WorkflowConfig {
         this.states = states;
     }
 
-    public List<ChapterMapping> getChapterMapping() {
-        return chapterMapping;
-    }
-
-    public void setChapterMapping(List<ChapterMapping> chapterMapping) {
-        this.chapterMapping = chapterMapping;
-    }
+//    public List<ChapterMapping> getChapterMapping() {
+//        return chapterMapping;
+//    }
+//
+//    public void setChapterMapping(List<ChapterMapping> chapterMapping) {
+//        this.chapterMapping = chapterMapping;
+//    }
 }

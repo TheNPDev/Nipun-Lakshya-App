@@ -21,7 +21,7 @@ import com.samagra.ancillaryscreens.data.model.RetrofitService
 import com.samagra.ancillaryscreens.data.prefs.CommonsPrefsHelperImpl
 import com.samagra.commons.MetaDataExtensions
 import com.samagra.commons.models.FormStructure
-import com.samagra.commons.models.chaptersdata.ChapterMapping
+//import com.samagra.commons.models.chaptersdata.ChapterMapping
 import com.samagra.commons.models.metadata.CompetencyModel
 import com.samagra.commons.models.metadata.MetaDataRemoteResponse
 import com.samagra.commons.models.metadata.Subjects
@@ -31,7 +31,7 @@ import com.samagra.commons.utils.NetworkStateManager
 import com.samagra.commons.utils.RemoteConfigUtils
 import com.samagra.parent.ui.DataSyncRepository
 import com.samagra.parent.ui.getBearerAuthToken
-import io.realm.RealmList
+//import io.realm.RealmList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -116,35 +116,35 @@ object MetaDataHelper {
         }
 
         val odkFormsSet = mutableSetOf<String>()
-        val chapterMappingListRealm = ArrayList<ChapterMapping>()
+//        val chapterMappingListRealm = ArrayList<ChapterMapping>()
 
         withContext(Dispatchers.Default){
             workflowRefIdListRemote?.forEach { workFlowRefId ->
-                val chapterMappingData = ChapterMapping()
-                chapterMappingData.grade = workFlowRefId.grade ?: 0
-                chapterMappingData.subjectId = workFlowRefId.subjectId ?: 0
-                chapterMappingData.competencyId = workFlowRefId.competencyId.toString()
-                chapterMappingData.type = workFlowRefId.type
-                val realmList = RealmList<String>()
-                val refIdsList = workFlowRefId.refIds
-                refIdsList?.forEach { refId ->
-                    realmList.add(refId)
-                }
-                chapterMappingData.refIds = realmList
-                chapterMappingData.assessmentTypeId = workFlowRefId.assessmentTypeId ?: 0
-                chapterMappingData.isActive = workFlowRefId.isActive ?: true
-                chapterMappingListRealm.add(chapterMappingData)
-                if (chapterMappingData.type.equals(CommonConstants.ODK)) {
-                    workFlowRefId.refIds?.forEach { refId ->
-                        odkFormsSet.add(refId)
-                    }
-                }
+//                val chapterMappingData = ChapterMapping()
+//                chapterMappingData.grade = workFlowRefId.grade ?: 0
+//                chapterMappingData.subjectId = workFlowRefId.subjectId ?: 0
+//                chapterMappingData.competencyId = workFlowRefId.competencyId.toString()
+//                chapterMappingData.type = workFlowRefId.type
+//                val realmList = RealmList<String>()
+//                val refIdsList = workFlowRefId.refIds
+//                refIdsList?.forEach { refId ->
+//                    realmList.add(refId)
+//                }
+//                chapterMappingData.refIds = realmList
+//                chapterMappingData.assessmentTypeId = workFlowRefId.assessmentTypeId ?: 0
+//                chapterMappingData.isActive = workFlowRefId.isActive ?: true
+//                chapterMappingListRealm.add(chapterMappingData)
+//                if (chapterMappingData.type.equals(CommonConstants.ODK)) {
+//                    workFlowRefId.refIds?.forEach { refId ->
+//                        odkFormsSet.add(refId)
+//                    }
+//                }
             }
         }
 
         withContext(Dispatchers.IO){
-            RealmStoreHelper.deleteChapterMapping()
-            RealmStoreHelper.insertChapterMapping(chapterMappingListRealm)
+//            RealmStoreHelper.deleteChapterMapping()
+//            RealmStoreHelper.insertChapterMapping(chapterMappingListRealm)
             prefs.updateFormConfiguredListText(gson.toJson(odkFormsSet))
             DataSyncRepository().checkODKFormsUpdates(
                 subject = "-",

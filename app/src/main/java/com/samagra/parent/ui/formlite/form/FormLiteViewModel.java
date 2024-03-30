@@ -33,9 +33,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmResults;
+//import io.realm.Realm;
+
 
 public class FormLiteViewModel extends ViewModel {
 
@@ -45,7 +44,7 @@ public class FormLiteViewModel extends ViewModel {
     private Map<String, Object> dataStore;
     private MutableLiveData<String> verifiedSLC = new MutableLiveData<>();
     private MutableLiveData<String> generatedSLC = new MutableLiveData<>();
-    private Realm realm;
+//    private Realm realm;
     private StudentDetailsFormData formData;
     private MutableLiveData<String> noteText = new MutableLiveData<>();
 

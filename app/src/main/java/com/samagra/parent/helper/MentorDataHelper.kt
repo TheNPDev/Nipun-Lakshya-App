@@ -220,8 +220,8 @@ object MentorDataHelper {
         Timber.d("parseSchoolsData size: ${schoolList?.size}")
         Timber.d("parseSchoolsData first data: ${schoolList?.get(0)}")
         schoolList?.let {
-            RealmStoreHelper.deleteSchools()
-            RealmStoreHelper.insertSchools(it)
+//            RealmStoreHelper.deleteSchools()
+//            RealmStoreHelper.insertSchools(it)
 
         }
         Timber.d("parseSchoolsData: end")

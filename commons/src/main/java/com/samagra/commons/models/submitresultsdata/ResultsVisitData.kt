@@ -1,7 +1,6 @@
 package com.samagra.commons.models.submitresultsdata
 
-import io.realm.RealmObject
-import io.realm.annotations.Required
+//import io.realm.annotations.Required
 
 open class ResultsVisitData(
     var submissionTimeStamp: Long?,
@@ -17,8 +16,8 @@ open class ResultsVisitData(
     var actor: String?,
     var block: String?,
     var studentSession: String?,
-    @Required
-    var assessment_type: String = ""
-) : RealmObject() {
-    constructor() : this(0L,null,null, null, null, false, null, null, null, null, null, null, null, "")
+//    @Required
+//    var assessment_type: String = ""
+) {
+    constructor() : this(0L,null,null, null, null, false, null, null, null, null, null, null, null)
 }
